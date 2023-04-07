@@ -1,0 +1,40 @@
+.nav {
+  padding: 1rem 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: transparent;
+  z-index: 1;
+
+  .navList {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    .navItem {
+      margin: 0 1rem;
+
+      .navLink {
+        color: #fff;
+        font-size: 1.2rem;
+        text-decoration: none;
+        transition: color 0.3s;
+      
+        &:hover {
+          color: #ccc;
+        }
+
+        img{
+          width: 30px;
+          height: 30px;
+          color: white;
+        }
+      }
+    }
+  }
+}
+.navLink:hover img {
+  transform: rotate(-90deg);
+}
