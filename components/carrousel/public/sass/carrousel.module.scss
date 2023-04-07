@@ -1,11 +1,11 @@
-.container {
+.containerCarrousel {
     position: relative;
     width: 100%;
-    height: 300px;
+    height: 100vh;
     overflow: hidden;
-  }
-  
-  .item {
+}
+
+.item {
     position: absolute;
     top: 0;
     left: 0;
@@ -15,38 +15,10 @@
     background-position: center;
     opacity: 0;
     transition: opacity 0.5s;
-  }
-  
-  .item.active {
+}
+
+.item.active {
     opacity: 1;
-  }
-  
- 
-  
-  .indicators {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
-  }
-  
-  .indicator {
-    background-color: white;
-    border: none;
-    width: 10px;
-    height: 10px;
-    margin: 0 10px;
-    padding: 0;
-    border-radius: 50%;
-    cursor: pointer;
-    outline: none;
-    transition: background-color 0.5s;
-  }
-  
-  .indicator.active {
-    background-color: black;
-  }
+}
+
+

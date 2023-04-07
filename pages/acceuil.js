@@ -3,6 +3,7 @@ import styles from '@/styles/acceuil.module.css';
 import Link from 'next/link';
 import { Navbar } from '@/components/navbar/navbar';
 import Carrousel from '@/components/carrousel/carrousel';
+import { Footer } from '@/components/footer/footer';
 
 
 export default function Accueil() {
@@ -11,7 +12,7 @@ export default function Accueil() {
     <div>
       <Navbar/>
       <Carrousel/>
-      
+      <Footer/>
     </div>
   );
 }

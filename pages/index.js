@@ -3,11 +3,13 @@ import Head from 'next/head'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 import Link from 'next/link'
+
 // import { Header } from '../components/header/header'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+  
   return (
     <div >
       <Head>
@@ -21,9 +23,9 @@ export default function Home() {
         <video  autoPlay muted loop src={"/video/vid_1.mp4"} />
       {/* <Header/> */}
       <Link href="./acceuil">
-        <div className={styles.homeButton}>START </div>
+        <div   > <audio className={styles.homeButton} src={"audio/vroum.mp3"} controls> START</audio></div>
       </Link>
-      
+      <h1 className={styles.homeTitle}>Enide For Speed</h1>
       </main> 
       </div>
   )

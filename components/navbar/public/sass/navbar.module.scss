@@ -3,23 +3,27 @@
   position: fixed;
   top: 0;
   width: 100%;
-  background-color: transparent;
+  background-color: #220202d8;
   z-index: 1;
+
 
   .navList {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     list-style: none;
     margin: 0;
     padding: 0;
-
+    
     .navItem {
       margin: 0 1rem;
+
+      a{
+        text-decoration: none !important;
+      }
 
       .navLink {
         color: #fff;
         font-size: 1.2rem;
-        text-decoration: none;
         transition: color 0.3s;
       
         &:hover {
