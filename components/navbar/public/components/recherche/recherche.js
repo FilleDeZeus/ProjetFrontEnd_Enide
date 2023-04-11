@@ -1,28 +1,32 @@
 import React, { useState } from 'react';
 import Autosuggest from 'react-autosuggest';
-import { searchCars } from '../../../../../api/cars';
-import { useRouter } from 'next/router';
-console.log(searchCars);
+import Link from 'next/link';
+import { searchCars } from '@/api/cars';
+import './public/sass/recherche.module.scss';
+import { CarRecherche } from './public/components/carRecherche/carRecherche';
+ import { useRouter } from 'next/router';
 export const Recherche = () => {
-  const router = useRouter();
   const [value, setValue] = useState('');
   const [suggestions, setSuggestions] = useState([]);
 
   const getSuggestions = async (value) => {
-    const inputLength = value.trim().length;
-  
-    if (inputLength === 0) {
+    if (!value) {
       return [];
     }
-  
-    const data = await searchCars(value.trim());
-  
-    return data;
+
+    const inputValue = value.trim().toLowerCase();
+
+    if (inputValue.length === 0) {
+      return [];
+    }
+
+    const results = await searchCars(inputValue);
+    return results;
   };
 
   const onSuggestionsFetchRequested = async ({ value }) => {
-    const suggestions = await getSuggestions(value);
-    setSuggestions(suggestions);
+    const newSuggestions = await getSuggestions(value);
+    setSuggestions(newSuggestions);
   };
 
   const onSuggestionsClearRequested = () => {
@@ -32,30 +36,36 @@ export const Recherche = () => {
   const onChange = (event, { newValue }) => {
     setValue(newValue);
   };
-
   const onSuggestionSelected = (event, { suggestion }) => {
-    router.push(`/selected/${suggestion.nom}`, { state: { produit: suggestion } });
+    setValue('');
   };
-
   const renderSuggestion = (suggestion) => (
-    <div>{suggestion.nom}</div>
+    <Link href={`/${suggestion.id}`}>
+        {suggestion.image && (
+          <img src={suggestion.image} alt={suggestion.nom} className="suggestion-image" />
+        )}
+        <span>{suggestion.nom}</span>
+    </Link>
   );
 
   const inputProps = {
     placeholder: 'Recherche...',
-    value,
+    value: value || '',
     onChange,
+    
   };
 
   return (
-    <Autosuggest
-      suggestions={suggestions}
-      onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-      onSuggestionsClearRequested={onSuggestionsClearRequested}
-      getSuggestionValue={(suggestion) => suggestion.nom}
-      renderSuggestion={renderSuggestion}
-      inputProps={inputProps}
-      onSuggestionSelected={onSuggestionSelected}
-    />
+    <div className='recherche'>
+      <Autosuggest
+        suggestions={suggestions}
+        onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+        onSuggestionsClearRequested={onSuggestionsClearRequested}
+        getSuggestionValue={(suggestion) => suggestion.nom}
+        renderSuggestion={renderSuggestion}
+        inputProps={inputProps}
+        onSuggestionSelected={onSuggestionSelected}
+      />
+    </div>
   );
 };

@@ -1,0 +1,32 @@
+.CarRecherche {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  text-decoration: none;
+  
+}
+
+.carTitre {
+  font-family: 'Helvetica', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.carInfo {
+  display: flex;
+  align-items: center;
+}
+
+.carImage {
+  width: 150px;
+  height: auto;
+  border-radius: 4px;
+  margin-right: 20px;
+  object-fit: cover;
+}

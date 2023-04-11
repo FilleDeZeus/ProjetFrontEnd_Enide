@@ -6,3 +6,4 @@ export const searchCars = async (query) => {
     return regex.test(car.model) || regex.test(car.make_id);
   });
 };
+

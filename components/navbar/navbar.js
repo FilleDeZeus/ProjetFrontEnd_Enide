@@ -19,12 +19,12 @@ export const Navbar = () => {
           </Link>
         </li>
         <li className={styles.navItem}>
-          <Link href="/">
+          <Link href="/acceuil">
             <div className={styles.navLink}>Home</div>
           </Link>
         </li>
         <li className={styles.navItem}>
-          <Link href="/">
+          <Link href="/catalogue">
             <div className={styles.navLink}>Catalogue</div>
           </Link>
         </li>
