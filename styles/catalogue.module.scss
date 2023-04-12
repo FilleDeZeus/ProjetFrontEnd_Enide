@@ -1,95 +1,53 @@
 .catalogueContainer {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  grid-gap: 2rem;
-  padding: 5rem;
-  // background-color: rgba(140, 131, 131, 0.739);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  list-style: none;
+  gap: 4rem;
+  margin-bottom: 0px;
+  padding: 50px;
+background-color: white;
+}
 
-  .catalogueList {
-    list-style: none;
-    // width: 20%;
-    // height: 10%;
+.catalogueListItem {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+
+  
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 2rem 0;
+}
+
+.paginationPage {
+  margin: 0 1rem;
+}
+
+.paginationLink {
+  text-decoration: none;
+}
+
+.active {
+  font-weight: bold;
+}
+
+.breakme {
+  margin: 0 1rem;
+}
+
+// Media query pour les écrans plus petits
+@media (max-width: 768px) {
+  .catalogueContainer {
+    padding: 2rem;
   }
 
   .catalogueListItem {
-    position: relative;
-    overflow: hidden;
-    border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    // height: 50%;
-
-    // height: 300px;
-    
-    &:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    a {
-      text-decoration: none;
-      color: #333;
-    }
-  }
-
-  .pagination {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-    cursor: pointer;
-    color: white;
-
-    
-
-    .paginationPage {
-      display: inline-block;
-      margin: 0 0.5rem;
-      color: white;
-
-      &:first-child,
-      &:last-child {
-        margin: 0;
-      }
-
-      &.active {
-        font-weight: bold;
-        text-decoration: underline;
-      }
-    }
-
-    .paginationLink {
-      text-decoration: none;
-      transition: all 0.3s ease;
-
-      &:hover {
-        color: #666;
-      }
-    }
-
-    .breakme {
-      margin: 0 0.5rem;
-    }
-  }
-}
-
-.paginationContainer {
-  margin-top: 20px;
-  margin-bottom: 40px;
-
-  li a {
-    background-color: white;
-    color: #333;
-    border-radius: 4px;
-
-    &:hover {
-      background-color: #e1e1e1;
-    }
-  }
-
-  li.active a {
-    background-color: #333;
-    color: white;
+    width: 200px;
+    height: 200px;
   }
 }

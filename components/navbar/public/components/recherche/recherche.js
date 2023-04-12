@@ -1,71 +1,59 @@
-import React, { useState } from 'react';
-import Autosuggest from 'react-autosuggest';
+import { useState } from 'react';
 import Link from 'next/link';
 import { searchCars } from '@/api/cars';
-import './public/sass/recherche.module.scss';
+import styles from './public/sass/recherche.module.scss';
 import { CarRecherche } from './public/components/carRecherche/carRecherche';
- import { useRouter } from 'next/router';
+
 export const Recherche = () => {
   const [value, setValue] = useState('');
   const [suggestions, setSuggestions] = useState([]);
 
-  const getSuggestions = async (value) => {
-    if (!value) {
+  const handleInputChange = async (event) => {
+    const inputValue = event.target.value.trim().toLowerCase();
+    setValue(inputValue);
+    const newSuggestions = await getSuggestions(inputValue);
+    setSuggestions(newSuggestions);
+  };
+
+  const getSuggestions = async (inputValue) => {
+    if (!inputValue) {
       return [];
     }
-
-    const inputValue = value.trim().toLowerCase();
-
-    if (inputValue.length === 0) {
-      return [];
-    }
-
     const results = await searchCars(inputValue);
     return results;
   };
 
-  const onSuggestionsFetchRequested = async ({ value }) => {
-    const newSuggestions = await getSuggestions(value);
-    setSuggestions(newSuggestions);
-  };
-
-  const onSuggestionsClearRequested = () => {
+  const handleSuggestionClick = () => {
+    setValue('');
     setSuggestions([]);
   };
 
-  const onChange = (event, { newValue }) => {
-    setValue(newValue);
-  };
-  const onSuggestionSelected = (event, { suggestion }) => {
-    setValue('');
-  };
   const renderSuggestion = (suggestion) => (
     <Link href={`/${suggestion.id}`}>
-        {suggestion.image && (
-          <img src={suggestion.image} alt={suggestion.nom} className="suggestion-image" />
-        )}
-        <span>{suggestion.nom}</span>
+      <CarRecherche car={suggestion} />
     </Link>
   );
 
-  const inputProps = {
-    placeholder: 'Recherche...',
-    value: value || '',
-    onChange,
-    
-  };
-
   return (
-    <div className='recherche'>
-      <Autosuggest
-        suggestions={suggestions}
-        onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-        onSuggestionsClearRequested={onSuggestionsClearRequested}
-        getSuggestionValue={(suggestion) => suggestion.nom}
-        renderSuggestion={renderSuggestion}
-        inputProps={inputProps}
-        onSuggestionSelected={onSuggestionSelected}
+    <div className={styles.recherche}>
+      <input
+        type="text"
+        placeholder="Recherche..."
+        value={value}
+        onChange={handleInputChange}
+        className={styles.input}
       />
+      <div className={styles.suggestionContainer}>
+        {suggestions.map((suggestion) => (
+          <div
+            key={suggestion.id}
+            onClick={handleSuggestionClick}
+            className={styles.suggestion}
+          >
+            {renderSuggestion(suggestion)}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

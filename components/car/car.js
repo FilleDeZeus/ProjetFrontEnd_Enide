@@ -1,24 +1,34 @@
 import React from 'react'
 import styles from './public/sass/car.module.scss';
 
-export const Car = ({ car }) => {
+export const Car = ({ carInfo, car }) => {
+  const selectedCar = carInfo || car;
+
+  if (!selectedCar) {
+    return null;
+  }
   
-    return (
-      <div className={styles.carPage}>
-        <h1 className={styles.carTitre}>{car.make_id} {car.model}</h1>
-        <div className={styles.carInfo}>
-          <img className={styles.carImage} src={car.image} alt={car.model} />
-          <ul className={styles.carDetails}>
-            <li><span>Année:</span> {car.year}</li>
-            <li><span>Couleur:</span> {car.color}</li>
-            <li><span>Prix:</span> {car.price}</li>
-          </ul>
+  return (
+    <div
+      className={`${styles.contenu} ${
+        selectedCar.model !== '' && selectedCar.price !== '' ? styles.visible : ''
+      }`}
+      style={{
+        backgroundImage: selectedCar.image ? `url(${selectedCar.image})` : '',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }}
+    >
+      <div className={styles.texte}>
+        <h1>Enide For Speed</h1>
+        <div>
+          <h3> Model: {selectedCar.model}</h3>
+          <p> Prix: {selectedCar.price} €</p>
+          <p>Color: {selectedCar.color}</p>
+          <p>Année: {selectedCar.year}</p>
         </div>
       </div>
-    );
-  }
-
-
-
-  
-  
+    </div>
+  );
+};
