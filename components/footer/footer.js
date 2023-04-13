@@ -23,7 +23,7 @@ export const Footer = () => {
                 <div className={styles.col}>
                     <h3 className={styles.titre}>Liens utiles</h3>
                     <ul className={styles.liste}>
-                        <li><Link href="/accueil">Accueil</Link></li>
+                        <li><Link href="/acceuil">Accueil</Link></li>
                         <li><Link href="/catalogue">Catalogue</Link></li>
                         <li><Link href="/blog">Blog</Link></li>
                         <li><Link href="/contact">Contact</Link></li>

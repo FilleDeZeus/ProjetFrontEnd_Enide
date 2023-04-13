@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { Car } from '@/components/car/car';
 
 export default function Accueil() {
-  const [carInfo, setCarInfo] = useState({  id: '', model: '', price: '', color: '', year: '', iamge: ''});
+  const [carInfo, setCarInfo] = useState({  id: '', model: '', price: '', color: '', year: '', image: '', make_id:''});
 
   return (
     <div>

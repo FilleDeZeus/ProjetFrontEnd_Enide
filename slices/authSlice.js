@@ -1,18 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+
 const initialState = {
   user: null,
 };
 export const userAdapter = (firebaseUser) => {
-    if (!firebaseUser) return null;
-  
-    return {
-      uid: firebaseUser.uid,
-      email: firebaseUser.email,
-      name: firebaseUser.displayName,
-      photoURL: firebaseUser.photoURL,
-    };
+  if (!firebaseUser) return null;
+
+  return {
+    uid: firebaseUser.uid,
+    email: firebaseUser.email,
+    firstName: firebaseUser.displayName.split(' ')[0] ,
+    lastName: firebaseUser.displayName.split(' ')[1] ,
+    photoURL: firebaseUser.photoURL,
   };
+};;
   
   export const authSlice = createSlice({
     name: 'auth',
@@ -27,3 +29,4 @@ export const userAdapter = (firebaseUser) => {
 export const { setUser } = authSlice.actions;
 export const selectUser = (state) => state.auth.user;
 export default authSlice.reducer;
+

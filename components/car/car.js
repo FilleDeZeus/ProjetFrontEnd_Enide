@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './public/sass/car.module.scss';
 
+
 export const Car = ({ carInfo, car }) => {
   const selectedCar = carInfo || car;
 
@@ -21,7 +22,7 @@ export const Car = ({ carInfo, car }) => {
       }}
     >
       <div className={styles.texte}>
-        <h1>Enide For Speed</h1>
+        <h1>{selectedCar.make_id}</h1>
         <div>
           <h3> Model: {selectedCar.model}</h3>
           <p> Prix: {selectedCar.price} €</p>

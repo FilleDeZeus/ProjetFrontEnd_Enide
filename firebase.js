@@ -3,7 +3,7 @@ import 'firebase/auth';
 import 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyADQlIQKQK6hSsAwAY4uTi3Rlsv6QM8yNw",
+  apiKey: "AIzaSyD3BUNDvLVxBHSBuWuShcoetm9v-bypPrI",
   authDomain: "carprojet.firebaseapp.com",
   projectId: "carprojet",
   storageBucket: "carprojet.appspot.com",
@@ -17,6 +17,9 @@ if (!firebase.apps.length) {
 }
 
 export default firebase;
+
 const firestore = firebase.firestore();
 
-export { firestore };
+
+const db = firebase.firestore();
+export { firestore, db };

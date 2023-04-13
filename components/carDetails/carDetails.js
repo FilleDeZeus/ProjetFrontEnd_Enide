@@ -2,12 +2,57 @@ import { Footer } from '../footer/footer';
 import { GoogleMaps } from './public/components/googleMaps/googleMaps';
 import styles from './public/sass/carDetails.module.scss';
 import { useState } from 'react';
+import { db } from '@/firebase';
+import { useSelector } from 'react-redux';
+import { selectUser } from '@/slices/authSlice';
+
 export const CarDetails = ({ car }) => {
   const [isMapVisible, setIsMapVisible] = useState(false);
+  const [favoris, setFavoris] = useState([]);
+  const currentUser = useSelector(selectUser);
 
   function toggleMap() {
     setIsMapVisible(!isMapVisible);
   }
+
+  function ajouterFavori(favori) {
+    db.collection('users').doc(currentUser.uid).collection('favoris').add({
+      favori: favori,
+    })
+    .then((docRef) => {
+      console.log('Favori ajouté avec l\'ID:', docRef.id);
+    })
+    .catch((error) => {
+      console.error('Erreur lors de l\'ajout du favori:', error);
+    });
+  }
+
+  function supprimerFavori(favoriId) {
+    db.collection('users')
+      .doc(currentUser.uid)
+      .collection('favoris')
+      .doc(favoriId.toString()) // Convertir favoriId en chaîne de caractères
+      .delete()
+      .then(() => {
+        console.log("Favori supprimé avec l'ID:", favoriId);
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la suppression du favori:", error);
+      });
+  }
+
+  function toggleFavoris() {
+    if (favoris.includes(car.id)) {
+      // Remove car from favoris
+      setFavoris(favoris.filter((id) => id !== car.id));
+      supprimerFavori(car.id);
+    } else {
+      // Add car to favoris
+      setFavoris([...favoris, car.id]);
+      ajouterFavori(car);
+    }
+  }
+  
 
   return (
     <div>
@@ -27,8 +72,7 @@ export const CarDetails = ({ car }) => {
           <div className={styles.carImageContainer}>
             <img
               className={styles.carImage}
-              src={car.image}
-              alt={car.model}
+              
             />
           </div>
           <div className={styles.carInfo}>
@@ -46,12 +90,36 @@ export const CarDetails = ({ car }) => {
                 <span>Prix:</span> {car.price}
               </li>
               <li>
-                <button onClick={toggleMap}>
-                  {isMapVisible ? 'Cacher la carte' : 'Afficher la carte'}
+                <div className={styles.btnGoogle}>
+                  <button
+                    className={styles.mapButton}
+                    onClick={toggleMap}
+                    style={{ border: 'none', background: 'none' }}
+                  >
+                    <img
+                      src="/images/google.svg"
+                      alt="Google Maps icon"
+                      style={{ width: '100%', height: '100%' }}
+                    />
+                  </button>
+                  {isMapVisible && <GoogleMaps car={car} />}
+                </div>
+              </li>
+              <li>
+                <button
+                  className={styles.favorisButton}
+                  onClick={toggleFavoris}
+                  style={{ border: 'none', background: 'none' }}
+                >
+                  {favoris.includes(car.id) ? (
+                    <i className="fa fa-heart" style={{ color: 'red' }}></i>
+                  ) : (
+                    <i className="fa fa-heart-o"></i>
+                  )}
                 </button>
-                {isMapVisible && <GoogleMaps car={car} />}
               </li>
             </ul>
+
             <p className={styles.carDescription}>{car.description}</p>
           </div>
         </div>

@@ -1,9 +1,8 @@
 import { Navbar } from '@/components/navbar/navbar';
 import { Footer } from '@/components/footer/footer';
-import { useState } from 'react';
 import styles from '@/styles/contact.module.scss'
+
 export default function Contact() {
-  const [carInfo, setCarInfo] = useState({  id: '', model: '', price: '', color: '', year: ''});
 
   return (
     <div className={styles.contact}>
