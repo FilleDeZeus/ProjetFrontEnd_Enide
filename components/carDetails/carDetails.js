@@ -1,8 +1,13 @@
 import { Footer } from '../footer/footer';
 import { GoogleMaps } from './public/components/googleMaps/googleMaps';
 import styles from './public/sass/carDetails.module.scss';
-
+import { useState } from 'react';
 export const CarDetails = ({ car }) => {
+  const [isMapVisible, setIsMapVisible] = useState(false);
+
+  function toggleMap() {
+    setIsMapVisible(!isMapVisible);
+  }
 
   return (
     <div>
@@ -41,7 +46,10 @@ export const CarDetails = ({ car }) => {
                 <span>Prix:</span> {car.price}
               </li>
               <li>
-                <GoogleMaps car={car} />
+                <button onClick={toggleMap}>
+                  {isMapVisible ? 'Cacher la carte' : 'Afficher la carte'}
+                </button>
+                {isMapVisible && <GoogleMaps car={car} />}
               </li>
             </ul>
             <p className={styles.carDescription}>{car.description}</p>

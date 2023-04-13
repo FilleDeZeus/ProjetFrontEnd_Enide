@@ -1,19 +1,18 @@
 .googleMapsContainer {
-    position: relative;
+    position: absolute;
     overflow: hidden;
-    max-width: 130px;
-    max-height: 50px;
+    max-width: 400px;
+    max-height: 300px;
     transform: scale(1);
     border-radius: 5%;
 
     transition: transform 0.3s ;
 }
   
-    .googleMapsContainer:hover {
-        position: absolute;
-        top: 0;
-        transform: scale(1.2);
-        max-width: 400px;
-        max-height: 300px;
-        border-radius: 5%;
-    }
+    // .googleMapsContainer:hover {
+    //     position: absolute;
+    //     top: 0;
+    //     transform: scale(1.2);
+        
+    //     border-radius: 5%;
+    // }

@@ -10,11 +10,39 @@ import ReactPaginate from 'react-paginate';
 import {SideBar} from '../components/sideBar/sideBar';
 
 const carsPerPage = 9;
-
 export default function Catalogue({ cars, currentPage, totalPages }) {
   const router = useRouter();
   const [pageCount, setPageCount] = useState(totalPages);
   const [selectedColors, setSelectedColors] = useState([]);
+  const [priceRange, setPriceRange] = useState([0, 50000]);
+  const [yearRange, setYearRange] = useState([0, 50000]);
+  const maxPrice = Math.max(...cars.map((car) => car.price));
+  const maxYear = Math.max(...cars.map((car) => car.year));
+
+  const [sidebarVisible, setSidebarVisible] = useState(false);
+  
+  function toggleSidebar() {
+    setSidebarVisible(!sidebarVisible);
+  }
+  function handlePriceRangeChange(newPriceRange) {
+    setPriceRange(newPriceRange);
+  }
+  function handleYearRangeChange(newYearRange) {
+    setYearRange(newYearRange);
+    
+  }
+  
+  function getPageCars() {
+    const startIndex = (currentPage - 1) * carsPerPage;
+    const endIndex = startIndex + carsPerPage;
+    return cars
+      .filter((car) => selectedColors.length === 0 || selectedColors.includes(car.color))
+      .filter((car) => car.price >= priceRange[0] && car.price <= priceRange[1])
+      .sort((a, b) => a.price - b.price) // Sort cars by price (ascending)
+      .filter((car) => car.year >= yearRange[0] && car.year <= yearRange[1])
+      .sort((a, b) => a.year - b.year) 
+      .slice(startIndex, endIndex);
+  }
 
   function handlePageClick(data) {
     const selectedPage = data.selected + 1;
@@ -32,13 +60,7 @@ export default function Catalogue({ cars, currentPage, totalPages }) {
     }
   }
 
-  function getPageCars() {
-    const startIndex = (currentPage - 1) * carsPerPage;
-    const endIndex = startIndex + carsPerPage;
-    return cars
-      .filter((car) => selectedColors.length === 0 || selectedColors.includes(car.color))
-      .slice(startIndex, endIndex);
-  }
+ 
 
   const colors = cars.reduce((acc, curr) => {
     if (!acc.includes(curr.color)) {
@@ -51,11 +73,29 @@ export default function Catalogue({ cars, currentPage, totalPages }) {
     <div>
       <Navbar />
       <div className={styles.container}>
-      <SideBar
-          colors={colors}
-          selectedColors={selectedColors}
-          onColorSelect={handleColorSelect}
+      {sidebarVisible ? (
+        <SideBar
+        colors={colors}
+        selectedColors={selectedColors}
+        onColorSelect={handleColorSelect}
+        onPriceRangeChange={handlePriceRangeChange}
+        onYearRangeChange={handleYearRangeChange}
+        maxYear={maxYear}
+        maxPrice={maxPrice}
+        onClose={toggleSidebar} // Ajoutez cette ligne
+      />
+      ) : (
+        <div className={styles.image}>
+          <img
+          src="images/volant.png"
+          alt="Filter icon"
+          className={styles.filterIcon}
+          onClick={toggleSidebar}
+          style={{ cursor: 'pointer' }}
         />
+        </div>
+        
+      )}
       <div className={styles.catalogueContainer}>
         <ul className={styles.catalogueList}>
           {getPageCars().map((car) => (
