@@ -72,7 +72,6 @@ export const CarDetails = ({ car }) => {
           <div className={styles.carImageContainer}>
             <img
               className={styles.carImage}
-              
             />
           </div>
           <div className={styles.carInfo}>

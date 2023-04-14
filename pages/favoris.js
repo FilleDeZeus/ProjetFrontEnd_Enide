@@ -7,31 +7,39 @@ import { Footer } from '@/components/footer/footer';
 import styles from '@/styles/favoris.module.scss';
 import { Car } from '@/components/car/car';
 import Link from 'next/link';
-const db = firebase.firestore();
+const db = firebase.firestore(); // Initialisation de la référence à la base de données Firebase
 
 export default function Favoris() {
-    const currentUser = useSelector(selectUser);
-    const [userFavoris, setUserFavoris] = useState([]);
-    useEffect(() => {
+  // Récupération de l'utilisateur connecté à partir du store Redux
+  const currentUser = useSelector(selectUser);
+  // Initialisation de l'état local pour stocker les favoris de l'utilisateur
+  const [userFavoris, setUserFavoris] = useState([]);
+
+ // Hook useEffect pour écouter les modifications des favoris de l'utilisateur dans la base de données Firebase
+ useEffect(() => {
     if (currentUser) {
-        const unsubscribe = db
-            .collection('users') // changez 'user' en 'users'
-            .doc(currentUser.uid)
-            .collection('favoris')
-            .onSnapshot((snapshot) => {
-            const favorisData = snapshot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data(),
-            }));
-            setUserFavoris(favorisData);
-            });
-    
-        return () => {
-            unsubscribe();
-        };
+      // Définition de l'abonnement à la collection 'favoris' de l'utilisateur dans la base de données Firebase
+      const unsubscribe = db
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('favoris')
+        .onSnapshot((snapshot) => { // Définition de la fonction à exécuter lorsque des modifications sont apportées à la collection 'favoris'
+          // Récupération des données des favoris de l'utilisateur à partir du snapshot
+          const favorisData = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          // Mise à jour de l'état local avec les données des favoris de l'utilisateur
+          setUserFavoris(favorisData);
+        });
+
+      return () => {
+        unsubscribe();
+      };
     }
   }, [currentUser]);
 
+  // affichage de la page de favoris
   return (
     <div>
         <Navbar />

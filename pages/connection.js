@@ -1,3 +1,4 @@
+// Importer les dépendances, les styles et les composants nécessaires
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser, selectUser } from '../slices/authSlice';
@@ -6,7 +7,9 @@ import { Footer } from '@/components/footer/footer';
 import { Navbar } from '@/components/navbar/navbar';
 import styles from '@/styles/connection.module.scss'
 
+// Composant principal Connection
 export default function Connection() {
+  // Gestion des états locaux pour les champs de formulaire et les états d'affichage
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
@@ -16,6 +19,7 @@ export default function Connection() {
   const [lastName, setLastName] = useState('');
   const currentUser = useSelector(selectUser);
 
+  // Fonction pour ajouter un utilisateur à Firestore
   const addUserToFirestore = async (user) => {
     try {
       await firestore.collection('users').doc(user.uid).set({
@@ -28,6 +32,8 @@ export default function Connection() {
       console.error('Erreur lors de l\'ajout de l\'utilisateur à Firestore', error);
     }
   };
+
+  // Fonction pour se connecter
   const signIn = async (e) => {
     e.preventDefault();
 
@@ -39,9 +45,11 @@ export default function Connection() {
       console.error('Erreur de connexion', error);
     }
   };
+
+  // Fonction pour envoyer un e-mail de réinitialisation du mot de passe
   const sendPasswordResetEmail = async (e) => {
     e.preventDefault();
-  
+
     try {
       await firebase.auth().sendPasswordResetEmail(email);
       alert('Un e-mail de réinitialisation de mot de passe a été envoyé à ' + email);
@@ -49,6 +57,8 @@ export default function Connection() {
       console.error('Erreur lors de l\'envoi de l\'e-mail de réinitialisation de mot de passe', error);
     }
   };
+
+  // Fonction pour s'inscrire
   const signUp = async (e) => {
     e.preventDefault();
 
@@ -65,11 +75,13 @@ export default function Connection() {
         uid: user.uid,
       });
 
-    dispatch(setUser({ ...user, displayName: `${firstName} ${lastName}` }));
-  } catch (error) {
-    console.error('Erreur d\'inscription', error);
-  }
-};
+      dispatch(setUser({ ...user, displayName: `${firstName} ${lastName}` }));
+    } catch (error) {
+      console.error('Erreur d\'inscription', error);
+    }
+  };
+
+  // Surveiller les changements d'état d'authentification
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
@@ -84,6 +96,7 @@ export default function Connection() {
     };
   }, [dispatch]);
 
+  // Fonction pour se déconnecter
   const signOut = async () => {
     try {
       await firebase.auth().signOut();

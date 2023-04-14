@@ -12,7 +12,6 @@ export const userAdapter = (firebaseUser) => {
     email: firebaseUser.email,
     firstName: firebaseUser.displayName.split(' ')[0] ,
     lastName: firebaseUser.displayName.split(' ')[1] ,
-    photoURL: firebaseUser.photoURL,
   };
 };;
   

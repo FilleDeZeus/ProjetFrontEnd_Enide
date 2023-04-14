@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { searchCars } from '@/api/cars';
 import { Car } from '../components/car/car';
@@ -8,8 +7,11 @@ import { Navbar } from '../components/navbar/navbar';
 import { Footer } from '../components/footer/footer';
 import ReactPaginate from 'react-paginate';
 import {SideBar} from '../components/sideBar/sideBar';
-
+import { useState } from 'react';
+// Nombre de voitures par page
 const carsPerPage = 9;
+
+// Composant principal Catalogue
 export default function Catalogue({ cars, currentPage, totalPages }) {
   const router = useRouter();
   const [pageCount, setPageCount] = useState(totalPages);
@@ -19,36 +21,42 @@ export default function Catalogue({ cars, currentPage, totalPages }) {
   const maxPrice = Math.max(...cars.map((car) => car.price));
   const maxYear = Math.max(...cars.map((car) => car.year));
 
+  // Gérer la visibilité de la barre latérale
   const [sidebarVisible, setSidebarVisible] = useState(false);
-  
+
+  // Fonction pour basculer l'affichage de la barre latérale
   function toggleSidebar() {
     setSidebarVisible(!sidebarVisible);
   }
+
+  // Fonctions pour gérer les changements de filtres
   function handlePriceRangeChange(newPriceRange) {
     setPriceRange(newPriceRange);
   }
   function handleYearRangeChange(newYearRange) {
     setYearRange(newYearRange);
-    
   }
-  
+
+  // Fonction pour obtenir les voitures filtrées et paginées
   function getPageCars() {
     const startIndex = (currentPage - 1) * carsPerPage;
     const endIndex = startIndex + carsPerPage;
     return cars
       .filter((car) => selectedColors.length === 0 || selectedColors.includes(car.color))
       .filter((car) => car.price >= priceRange[0] && car.price <= priceRange[1])
-      .sort((a, b) => a.price - b.price) // Sort cars by price (ascending)
+      .sort((a, b) => a.price - b.price) // Trier les voitures par prix (croissant)
       .filter((car) => car.year >= yearRange[0] && car.year <= yearRange[1])
       .sort((a, b) => a.year - b.year) 
       .slice(startIndex, endIndex);
   }
 
+  // Gestion du clic sur la pagination
   function handlePageClick(data) {
     const selectedPage = data.selected + 1;
     router.push(`/catalogue?page=${selectedPage}`);
   }
 
+  // Gestion de la sélection des couleurs
   function handleColorSelect(color) {
     if (color === 'all') {
       setSelectedColors([]);
@@ -60,14 +68,14 @@ export default function Catalogue({ cars, currentPage, totalPages }) {
     }
   }
 
- 
-
+  // Récupérer les couleurs uniques des voitures
   const colors = cars.reduce((acc, curr) => {
     if (!acc.includes(curr.color)) {
       acc.push(curr.color);
     }
     return acc;
   }, []);
+
 
   return (
     <div>

@@ -1,14 +1,17 @@
+// Importer les dépendances, les styles et les composants nécessaires
 import React from 'react'
 import styles from './public/sass/car.module.scss';
 
-
+// Créer le composant Car qui reçoit les informations de la voiture en tant que propriété
 export const Car = ({ carInfo, car }) => {
+  // Utiliser les informations de la voiture fournies en tant que propriété ou, si elles sont absentes, utiliser les informations de la voiture par défaut
   const selectedCar = carInfo || car;
 
+  // Si les informations de la voiture sont absentes, ne rien afficher
   if (!selectedCar) {
     return null;
   }
-  
+
   return (
     <div
       className={`${styles.contenu} ${
