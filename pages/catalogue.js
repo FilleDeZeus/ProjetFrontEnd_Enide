@@ -8,10 +8,10 @@ import { Footer } from '../components/footer/footer';
 import ReactPaginate from 'react-paginate';
 import {SideBar} from '../components/sideBar/sideBar';
 import { useState } from 'react';
+
 // Nombre de voitures par page
 const carsPerPage = 9;
 
-// Composant principal Catalogue
 export default function Catalogue({ cars, currentPage, totalPages }) {
   const router = useRouter();
   const [pageCount, setPageCount] = useState(totalPages);
@@ -21,15 +21,15 @@ export default function Catalogue({ cars, currentPage, totalPages }) {
   const maxPrice = Math.max(...cars.map((car) => car.price));
   const maxYear = Math.max(...cars.map((car) => car.year));
 
-  // Gérer la visibilité de la barre latérale
+  //  la visibilité de la barre 
   const [sidebarVisible, setSidebarVisible] = useState(false);
 
-  // Fonction pour basculer l'affichage de la barre latérale
+  // Fonction affichage de la barre latérale
   function toggleSidebar() {
     setSidebarVisible(!sidebarVisible);
   }
 
-  // Fonctions pour gérer les changements de filtres
+  // gere les changements de filtres
   function handlePriceRangeChange(newPriceRange) {
     setPriceRange(newPriceRange);
   }
@@ -68,7 +68,7 @@ export default function Catalogue({ cars, currentPage, totalPages }) {
     }
   }
 
-  // Récupérer les couleurs uniques des voitures
+  // Récupérer les couleurs  des voitures
   const colors = cars.reduce((acc, curr) => {
     if (!acc.includes(curr.color)) {
       acc.push(curr.color);

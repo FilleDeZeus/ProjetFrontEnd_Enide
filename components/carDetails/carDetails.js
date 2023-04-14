@@ -19,35 +19,21 @@ export const CarDetails = ({ car }) => {
     db.collection('users').doc(currentUser.uid).collection('favoris').add({
       favori: favori,
     })
-    .then((docRef) => {
-      console.log('Favori ajouté avec l\'ID:', docRef.id);
-    })
-    .catch((error) => {
-      console.error('Erreur lors de l\'ajout du favori:', error);
-    });
   }
 
   function supprimerFavori(favoriId) {
     db.collection('users')
       .doc(currentUser.uid)
       .collection('favoris')
-      .doc(favoriId.toString()) // Convertir favoriId en chaîne de caractères
+      .doc(favoriId.toString()) 
       .delete()
-      .then(() => {
-        console.log("Favori supprimé avec l'ID:", favoriId);
-      })
-      .catch((error) => {
-        console.error("Erreur lors de la suppression du favori:", error);
-      });
   }
 
   function toggleFavoris() {
     if (favoris.includes(car.id)) {
-      // Remove car from favoris
       setFavoris(favoris.filter((id) => id !== car.id));
       supprimerFavori(car.id);
     } else {
-      // Add car to favoris
       setFavoris([...favoris, car.id]);
       ajouterFavori(car);
     }

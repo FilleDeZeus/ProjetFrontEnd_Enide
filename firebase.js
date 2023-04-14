@@ -20,6 +20,5 @@ export default firebase;
 
 const firestore = firebase.firestore();
 
-
 const db = firebase.firestore();
 export { firestore, db };

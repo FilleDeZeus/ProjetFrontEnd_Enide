@@ -2,12 +2,11 @@ import { useEffect, useState } from 'react';
 import { searchCars } from '@/api/cars.js';
 
 export const CarFilter = () => {
-  const [models, setModels] = useState([]); // State pour stocker les modèles de voitures uniques
-  const [colors, setColors] = useState([]); // State pour stocker les couleurs de voitures uniques
-  const [selectedModel, setSelectedModel] = useState(''); // State pour stocker le modèle sélectionné
-  const [selectedColor, setSelectedColor] = useState(''); // State pour stocker la couleur sélectionnée
+  const [models, setModels] = useState([]); 
+  const [colors, setColors] = useState([]); 
+  const [selectedModel, setSelectedModel] = useState(''); 
+  const [selectedColor, setSelectedColor] = useState(''); 
 
-  // Utilisation de useEffect pour appeler l'API searchCars et récupérer les modèles et les couleurs de voitures uniques
   useEffect(() => {
     const fetchData = async () => {
       const data = await searchCars('');
@@ -22,21 +21,18 @@ export const CarFilter = () => {
     }
   }, [models, colors]);
 
-  // Gestionnaire d'événements pour le changement de modèle sélectionné
   function handleModelChange(event) {
     const value = event.target.value;
     setSelectedModel(value);
     onFilterChange({ model: value, color: selectedColor });
   }
 
-  // Gestionnaire d'événements pour le changement de couleur sélectionnée
   function handleColorChange(event) {
     const value = event.target.value;
     setSelectedColor(value);
     onFilterChange({ model: selectedModel, color: value });
   }
 
-  // Affichage des options de sélection de modèle et de couleur
   return (
     <div>
       <label htmlFor="model-select">Choose a model:</label>

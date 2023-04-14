@@ -7,9 +7,7 @@ import { Footer } from '@/components/footer/footer';
 import { Navbar } from '@/components/navbar/navbar';
 import styles from '@/styles/connection.module.scss'
 
-// Composant principal Connection
 export default function Connection() {
-  // Gestion des états locaux pour les champs de formulaire et les états d'affichage
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
@@ -19,7 +17,7 @@ export default function Connection() {
   const [lastName, setLastName] = useState('');
   const currentUser = useSelector(selectUser);
 
-  // Fonction pour ajouter un utilisateur à Firestore
+  // Fonction pour ajouter un utilisateur 
   const addUserToFirestore = async (user) => {
     try {
       await firestore.collection('users').doc(user.uid).set({
@@ -67,7 +65,7 @@ export default function Connection() {
       const user = userCredential.user;
       await user.updateProfile({ displayName: `${firstName} ${lastName}` });
 
-      // Ajouter l'utilisateur à Firestore
+      // Ajouter l'utilisateur 
       await addUserToFirestore({
         firstName,
         lastName,
@@ -81,7 +79,6 @@ export default function Connection() {
     }
   };
 
-  // Surveiller les changements d'état d'authentification
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
       if (user) {

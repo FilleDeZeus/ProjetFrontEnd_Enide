@@ -19,7 +19,7 @@ export default function Carrousel({ setCarInfo }) {
             year: shuffledData[0].year,
             image: shuffledData[0].image,
             make_id: shuffledData[0].make_id
-      }); // mise à jour du texte avec les infos de la première voiture
+      }); 
     }
     fetchData();
   }, []);
@@ -35,7 +35,7 @@ export default function Carrousel({ setCarInfo }) {
         year: cars[(activeIndex + 1) % cars.length].year,
         image: cars[(activeIndex + 1) % cars.length].image,
         make_id: cars[(activeIndex + 1) % cars.length].make_id,
-      }); // mise à jour du texte avec les infos de la voiture suivante
+      }); 
     }, 5000);
     return () => clearInterval(intervalId);
   }, [activeIndex, cars.length]);

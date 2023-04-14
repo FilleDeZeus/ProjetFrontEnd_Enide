@@ -7,29 +7,27 @@ import { Footer } from '@/components/footer/footer';
 import styles from '@/styles/favoris.module.scss';
 import { Car } from '@/components/car/car';
 import Link from 'next/link';
-const db = firebase.firestore(); // Initialisation de la référence à la base de données Firebase
+
+const db = firebase.firestore(); 
 
 export default function Favoris() {
-  // Récupération de l'utilisateur connecté à partir du store Redux
   const currentUser = useSelector(selectUser);
-  // Initialisation de l'état local pour stocker les favoris de l'utilisateur
   const [userFavoris, setUserFavoris] = useState([]);
 
- // Hook useEffect pour écouter les modifications des favoris de l'utilisateur dans la base de données Firebase
+ //  modifs des favoris de l'utilisateur
  useEffect(() => {
     if (currentUser) {
-      // Définition de l'abonnement à la collection 'favoris' de l'utilisateur dans la base de données Firebase
       const unsubscribe = db
         .collection('users')
         .doc(currentUser.uid)
         .collection('favoris')
-        .onSnapshot((snapshot) => { // Définition de la fonction à exécuter lorsque des modifications sont apportées à la collection 'favoris'
-          // Récupération des données des favoris de l'utilisateur à partir du snapshot
+        .onSnapshot((snapshot) => { 
+          // Récupere données grace snapshot
           const favorisData = snapshot.docs.map((doc) => ({
             id: doc.id,
             ...doc.data(),
           }));
-          // Mise à jour de l'état local avec les données des favoris de l'utilisateur
+          // Mise à jour de l'état 
           setUserFavoris(favorisData);
         });
 
@@ -39,7 +37,6 @@ export default function Favoris() {
     }
   }, [currentUser]);
 
-  // affichage de la page de favoris
   return (
     <div>
         <Navbar />

@@ -31,7 +31,7 @@ export const Footer = () => {
                 </div>
                 <div className={styles.col}>
                     <h3 className={styles.title}>Contactez-nous</h3>
-                    <p>123 Rue des Lorem Ipsum<br />75000 Paris<br />France<br /><br />contact@example.com<br />+33 (0)1 23 45 67 89</p>
+                    <p>123 Rue des Lorem Ipsum<br />75000 Paris<br />France<br /><br />contact@example.com<br />+33 0626990021</p>
                 </div>
                 <div className={styles.col}>
                     <h3 className={styles.titre}>Reseaux sociaux</h3>
